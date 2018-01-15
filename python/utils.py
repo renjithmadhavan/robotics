@@ -1,0 +1,17 @@
+import picamera
+import time
+
+## below is the general camera codes to take a pic and video
+
+## camera = picamera.PiCamera()
+## camera.capture('example.jpg')
+## 
+## camera.vflip = True
+## 
+## camera.capture('example2.jpg')
+## 
+## camera.start_recording('examplevid.h264')
+## time.sleep(5)
+## camera.stop_recording()
+
+
