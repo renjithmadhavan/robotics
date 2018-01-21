@@ -26,7 +26,7 @@ def init():
     gpio.setup(18, gpio.OUT)
 
 def forward(tf):
-    #init()
+    init()
     gpio.output(11, True)
     gpio.output(15, False)
     gpio.output(16, False)
@@ -35,7 +35,7 @@ def forward(tf):
     gpio.cleanup()
 
 def reverse(tf):
-    #init()
+    init()
     gpio.output(11, False)
     gpio.output(15, True)
     gpio.output(16, True)
@@ -44,7 +44,7 @@ def reverse(tf):
     gpio.cleanup()
 
 def goleft(tf):
-    #init()
+    init()
     gpio.output(11, False)
     gpio.output(15, False)
     gpio.output(16, False)
@@ -53,28 +53,28 @@ def goleft(tf):
     gpio.cleanup()
 
 def goright(tf):
-    #init()
+    init()
     gpio.output(11, True)
     gpio.output(15, False)
     gpio.output(16, False)
-    gpio.output(18, False)
-    time.sleep(tf)
-    gpio.cleanup()
-
-def pivotleft(tf):
-    #init()
-    gpio.output(11, True)
-    gpio.output(15, False)
-    gpio.output(16, True)
     gpio.output(18, False)
     time.sleep(tf)
     gpio.cleanup()
 
 def pivotright(tf):
-    #init()
+    init()
+    gpio.output(11, True)
+    gpio.output(15, True)
+    gpio.output(16, True)
+    gpio.output(18, False)
+    time.sleep(tf)
+    gpio.cleanup()
+
+def pivotleft(tf):
+    init()
     gpio.output(11, False)
     gpio.output(15, True)
-    gpio.output(16, False)
+    gpio.output(16, True)
     gpio.output(18, True)
     time.sleep(tf)
     gpio.cleanup()
@@ -90,4 +90,4 @@ def distance():
     value = sensor.Measurement(trig, echo)
     raw_distance = value.raw_distance(sample_size=samples, sample_wait=speed)
     metric_distance = value.distance_metric(raw_distance)
-    return metric_distance
+    return metric_distance + 0.6
