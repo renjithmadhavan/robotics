@@ -32,7 +32,7 @@ class Measurement(object):
         self.round_to = round_to
         self.gpio_mode = gpio_mode
 
-    def raw_distance(self, sample_size=11, sample_wait=0.1):
+    def raw_distance(self, sample_size=1, sample_wait=0.1):
         '''Return an error corrected unrounded distance, in cm, of an object 
         adjusted for temperature in Celcius.  The distance calculated
         is the median value of a sample of `sample_size` readings.
@@ -68,7 +68,6 @@ class Measurement(object):
         gpio.setwarnings(False)
         if not gpio.getmode():
             gpio.setmode(gpio.BOARD)
-            print(gpio.getmode())
         gpio.setup(self.trig_pin, gpio.OUT)
         gpio.setup(self.echo_pin, gpio.IN)
         

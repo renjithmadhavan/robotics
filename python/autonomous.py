@@ -3,7 +3,7 @@ import time
 import sys
 import sensor
 import random
-import utils
+from utils import *
 
 
 def check_front():
@@ -18,7 +18,7 @@ def check_front():
         if dist < 25:
             print('Too close,',dist)
             init()
-            pivot_left(3)
+            pivotleft(3)
             init()
             reverse(2)
             dist = distance()
@@ -40,7 +40,7 @@ def autonomy():
         for y in range(30):
             check_front()
             init()
-            pivot_left(tf)
+            pivotleft(tf)
     elif x == 2:
         for y in range(30):
             check_front()
@@ -52,5 +52,6 @@ def autonomy():
             init()
             goleft(tf)
 
-for z in range(10):
+for z in range(4):
+    print(z)
     autonomy()
