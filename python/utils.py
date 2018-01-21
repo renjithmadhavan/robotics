@@ -86,7 +86,7 @@ def pivotright(tf):
 def distance():
     ''' Return Distance in centimetres. '''   
     #trig, echo, speed, samples = get_args()
-    trig, echo, speed, samples = (12, 22, 0.1, 11)
+    trig, echo, speed, samples = [12, 22, 0.1, 11]
     value = sensor.Measurement(trig, echo)
     raw_distance = value.raw_distance(sample_size=samples, sample_wait=speed)
     metric_distance = value.distance_metric(raw_distance)
