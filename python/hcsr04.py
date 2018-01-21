@@ -54,7 +54,7 @@ def get_args():
     return trig, echo, speed, samples
 
 
-def main():
+def main_old():
     '''Main function to run the sensor with passed arguments'''
     
     trig, echo, speed, samples = get_args()
@@ -73,5 +73,14 @@ def main():
     print('The metric distance is {} centimetres.'.format(metric_distance))
 
 
-if __name__ == '__main__':
-    main()
+#if __name__ == '__main__':
+#    main()
+
+def distance():
+    ''' Return Distance in centimetres. '''   
+    trig, echo, speed, samples = get_args()
+    value = sensor.Measurement(trig, echo)
+    raw_distance = value.raw_distance(sample_size=samples, sample_wait=speed)
+    metric_distance = value.distance_metric(raw_distance)
+    return metric_distance
+
