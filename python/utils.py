@@ -18,7 +18,7 @@ import sensor
 
 
 def init():
-    if gpio.getmode() == -1:
+    if not gpio.getmode():
         gpio.setmode(gpio.BOARD)
     gpio.setup(11, gpio.OUT)
     gpio.setup(15, gpio.OUT)

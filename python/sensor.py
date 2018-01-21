@@ -66,7 +66,7 @@ class Measurement(object):
         sample = []
         # setup input/output pins
         gpio.setwarnings(False)
-        if gpio.getmode() == -1:
+        if not gpio.getmode():
             gpio.setmode(gpio_mode)
 		print(gpio.getmode())
         gpio.setup(self.trig_pin, gpio.OUT)
