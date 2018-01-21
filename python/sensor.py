@@ -66,7 +66,8 @@ class Measurement(object):
         sample = []
         # setup input/output pins
         GPIO.setwarnings(False)
-        #GPIO.setmode(self.gpio_mode)
+        if gpio.getmode() == -1:
+            gpio.setmode(gpio.BOARD)
         GPIO.setup(self.trig_pin, GPIO.OUT)
         GPIO.setup(self.echo_pin, GPIO.IN)
         
