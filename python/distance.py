@@ -3,15 +3,15 @@ import time
 
 def distance(measure='cm'):
     try:
-        gpio.setmode(gpio.BCM)
-        gpio.setup(27, gpio.OUT)
-        gpio.setup(18, gpio.IN)
+        gpio.setmode(gpio.BOARD)
+        gpio.setup(12, gpio.OUT)
+        gpio.setup(22, gpio.IN)
         
-        gpio.output(27, False)
-        while gpio.input(18) == 0:
+        gpio.output(12, False)
+        while gpio.input(22) == 0:
             nosig = time.time()
 
-        while gpio.input(18) == 1:
+        while gpio.input(22) == 1:
             sig = time.time()
 
         tl = sig - nosig
