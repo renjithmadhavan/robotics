@@ -77,7 +77,7 @@ def pivotright(tf):
     gpio.output(18, True)
     time.sleep(tf)
     gpio.cleanup()
-	
+    
 def get_args():
     '''Parse command line arguments.'''
 
@@ -155,7 +155,7 @@ def main_old():
 def distance():
     ''' Return Distance in centimetres. '''   
     #trig, echo, speed, samples = get_args()
-	trig, echo, speed, samples = (18, 25, 0.1, 11)
+    trig, echo, speed, samples = (18, 25, 0.1, 11)
     value = sensor.Measurement(trig, echo)
     raw_distance = value.raw_distance(sample_size=samples, sample_wait=speed)
     metric_distance = value.distance_metric(raw_distance)

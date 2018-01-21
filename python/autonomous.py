@@ -1,7 +1,7 @@
 import RPi.GPIO as gpio
 import time
 import sys
-from sensor import distance
+import sensor
 import random
 import utils
 
