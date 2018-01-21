@@ -6,7 +6,7 @@ sensor and a Raspberry Pi.  Imperial and Metric measurements are available'''
 
 import time
 import math
-import RPi.GPIO as GPIO
+import RPi.GPIO as gpio
 
 
 class Measurement(object):
@@ -23,7 +23,7 @@ class Measurement(object):
                  temperature=20,
                  unit='metric',
                  round_to=1,
-                 gpio_mode=GPIO.BCM
+                 gpio_mode=gpio.BCM
                  ):
         self.trig_pin = trig_pin
         self.echo_pin = echo_pin
@@ -65,26 +65,26 @@ class Measurement(object):
         speed_of_sound = 331.3 * math.sqrt(1+(self.temperature / 273.15))
         sample = []
         # setup input/output pins
-        GPIO.setwarnings(False)
+        gpio.setwarnings(False)
         if gpio.getmode() == -1:
             gpio.setmode(gpio.BOARD)
-        GPIO.setup(self.trig_pin, GPIO.OUT)
-        GPIO.setup(self.echo_pin, GPIO.IN)
+        gpio.setup(self.trig_pin, gpio.OUT)
+        gpio.setup(self.echo_pin, gpio.IN)
         
         for distance_reading in range(sample_size):
-            GPIO.output(self.trig_pin, GPIO.LOW)
+            gpio.output(self.trig_pin, gpio.LOW)
             time.sleep(sample_wait)
-            GPIO.output(self.trig_pin, True)
+            gpio.output(self.trig_pin, True)
             time.sleep(0.00001)
-            GPIO.output(self.trig_pin, False)
+            gpio.output(self.trig_pin, False)
             echo_status_counter = 1
-            while GPIO.input(self.echo_pin) == 0:
+            while gpio.input(self.echo_pin) == 0:
                 if echo_status_counter < 1000:
                     sonar_signal_off = time.time()
                     echo_status_counter += 1
                 else:
                     raise SystemError('Echo pulse was not received')
-            while GPIO.input(self.echo_pin) == 1:
+            while gpio.input(self.echo_pin) == 1:
                 sonar_signal_on = time.time()
             time_passed = sonar_signal_on - sonar_signal_off
             distance_cm = time_passed * ((speed_of_sound * 100) / 2)
@@ -92,7 +92,7 @@ class Measurement(object):
         sorted_sample = sorted(sample)
         # Only cleanup the pins used to prevent clobbering
         # any others in use by the program
-        GPIO.cleanup((self.trig_pin, self.echo_pin))
+        gpio.cleanup((self.trig_pin, self.echo_pin))
         return sorted_sample[sample_size // 2]
 
     def depth_metric(self, median_reading, hole_depth):
