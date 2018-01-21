@@ -3,7 +3,7 @@ import time
 
 def distance(measure='cm'):
     try:
-        gpio.setmode(gpio.BOARD)
+        #gpio.setmode(gpio.BOARD)
         gpio.setup(18, gpio.OUT)
         gpio.setup(25, gpio.IN)
         
