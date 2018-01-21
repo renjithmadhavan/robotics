@@ -23,7 +23,7 @@ class Measurement(object):
                  temperature=20,
                  unit='metric',
                  round_to=1,
-                 gpio_mode=gpio.BCM
+                 gpio_mode=gpio.BOARD
                  ):
         self.trig_pin = trig_pin
         self.echo_pin = echo_pin
@@ -67,7 +67,7 @@ class Measurement(object):
         # setup input/output pins
         gpio.setwarnings(False)
         if gpio.getmode() == -1:
-            gpio.setmode(gpio.BOARD)
+            gpio.setmode(gpio_mode)
         gpio.setup(self.trig_pin, gpio.OUT)
         gpio.setup(self.echo_pin, gpio.IN)
         
