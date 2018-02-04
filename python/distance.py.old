@@ -1,0 +1,42 @@
+import RPi.GPIO as gpio
+import time
+
+def distance(measure='cm'):
+    try:
+        gpio.setmode(gpio.BCM)
+        gpio.setup(18, gpio.OUT)
+        gpio.setup(25, gpio.IN)
+        
+        gpio.output(18, False)
+        echo_status=1
+        while gpio.input(25) == 0:
+            if echo_status < 700:
+                nosig = time.time()
+                echo_status += 1
+            else:
+                raise SystemError('Echo pulse was not recieved')
+
+        while gpio.input(25) == 1:
+            sig = time.time()
+
+        tl = sig - nosig
+
+        if measure == 'cm':
+            distance = tl / 0.000058
+        elif measure == 'in':
+            distance = tl / 0.000148
+        else:
+            print('improper choice of measurement: in or cm')
+            distance = None
+
+        gpio.cleanup()
+        return distance
+    except Exception as e:
+        print(e)
+        distance = 100
+        gpio.cleanup()
+        return distance
+
+		
+if __name__ == "__main__":
+    print(distance('cm'))

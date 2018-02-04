@@ -1,7 +1,7 @@
 import RPi.GPIO as gpio
 #import picamera
 import time
-import sensor
+#import sensor
 
 ## below is the general camera codes to take a pic and video
 
@@ -16,6 +16,9 @@ import sensor
 ## time.sleep(5)
 ## camera.stop_recording()
 
+def cleanup():
+    gpio.setmode(gpio.BOARD)
+    gpio.cleanup()
 
 def init():
     if not gpio.getmode():
@@ -83,11 +86,30 @@ def pivotleft(tf):
 #if __name__ == '__main__':
 #    main()
 
-def distance():
-    ''' Return Distance in centimetres. '''   
-    #trig, echo, speed, samples = get_args()
-    trig, echo, speed, samples = [12, 22, 0.1, 11]
-    value = sensor.Measurement(trig, echo)
-    raw_distance = value.raw_distance(sample_size=samples, sample_wait=speed)
-    metric_distance = value.distance_metric(raw_distance)
-    return metric_distance + 0.6
+
+
+def distance(sample_wait=0.00001):
+    gpio.setwarnings(False)
+    gpio.setmode(gpio.BOARD)
+    gpio.setup(12, gpio.OUT)
+    gpio.setup(22, gpio.IN)
+    gpio.output(12, gpio.LOW)
+    time.sleep(sample_wait)
+    gpio.output(12, True)
+    time.sleep(0.00001)
+    gpio.output(12, False)
+    flg = 1
+    sig_0 = 0
+    sig_1 = 0
+    while gpio.input(22) == 0:
+        if flg < 200:
+            sig_0 = time.time()
+            flg += 1
+        else:
+            raise SystemError('Echo pulse was not received')
+    while gpio.input(22) == 1:
+        sig_1 = time.time()
+    time_passed = sig_1 - sig_0
+    distance_cm = time_passed / 0.000058
+    gpio.cleanup()
+    return round(distance_cm, 2)
